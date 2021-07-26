@@ -3,8 +3,8 @@
 const size_t SIZE_Q = 10;
 
 typedef struct {
-    size_t data;
     size_t priority;
+    size_t data;
 } nodeType;
 
 nodeType* arr[SIZE_Q];
@@ -14,13 +14,13 @@ size_t items;
 
 void initStruct() {
     for (size_t i = 0; i < SIZE_Q; i++) {
-        arr[i] = NULL;
+        arr[i] = nullptr;
     }
     head = 0;
     tail = 0;
     items = 0;
 }
-
+/*
 void insert(size_t _priority, size_t _data) {
     nodeType* node = new nodeType;
     node->data = _data;
@@ -39,7 +39,7 @@ void insert(size_t _priority, size_t _data) {
         size_t i = 0;
         size_t id = 0;
         nodeType* temp;
-        for (i = 0; i < tail; ++i) {
+        for (i = head; i < tail; ++i) {
             id = i % SIZE_Q;
             if (arr[id]->priority > _priority) {
                 break;
@@ -62,23 +62,79 @@ void insert(size_t _priority, size_t _data) {
         tail++;
     }
 }
-
+*/
+/*
 nodeType* remove() {
     if (items == 0) {
-        return NULL;
+        return nullptr;
     } else{
         size_t id = head++ % SIZE_Q;
         nodeType* temp = arr[id];
-        arr[id] = NULL;
+        arr[id] = nullptr;
         items--;
         return temp;
+    }
+}
+*/
+
+void insert(size_t _priority, size_t _data){
+    nodeType* node = new nodeType;
+    node->priority = _priority;
+    node->data = _data;
+
+    size_t id = 0;
+
+    if(++items > SIZE_Q){
+        std::cout << "Queue is full! Item " << "[" << node->priority << ", " << node->data << "] not included!" << std::endl;
+        items = 10;
+    } else{
+        for(id = head; id < items; id++){
+            if(arr[id] == nullptr){
+                arr[id] = node;
+                tail++;
+                break;
+            }
+        }
+
+    }
+}
+
+void remove(){
+    nodeType* temp = arr[tail - 1];
+    if(items == 0) {
+        std::cout << "Queue is empty!" << std::endl;
+    } else{
+        for(size_t i = 0; i < tail; i++){
+            if(arr[i] != nullptr) {
+                if (arr[i]->priority < temp->priority) {
+                    temp = arr[i];
+                }
+            }
+        }
+        size_t id = 0;
+        while (id < tail){
+            if(arr[id] != nullptr){
+                if(arr[id]->priority == temp->priority && arr[id]->data == temp->data){
+                    std::cout << "Item [" << arr[id]->priority << ", " << arr[id]->data << "] removed!" << std::endl;
+                    arr[id] = nullptr;
+                    items--;
+                    break;
+                } else{
+                    id++;
+                }
+            } else{
+                id++;
+            }
+
+        }
+
     }
 }
 
 void printQ(){
     std::cout << "[ ";
     for (size_t i = 0; i < SIZE_Q; i++) {
-        if (arr[i] == NULL) {
+        if (arr[i] == nullptr) {
             std::cout << "[*, *] ";
         }
         else {
@@ -94,7 +150,7 @@ int main()
 {
     initStruct();
     insert(1, 11);
-    insert(3, 22);
+    insert(1, 22);
     insert(4, 33);
     insert(2, 44);
     insert(3, 55);
@@ -103,16 +159,22 @@ int main()
     insert(1, 88);
     insert(2, 99);
     insert(6, 100);
+    insert(7, 98);
+    insert(3, 89);
     printQ();
-    for (size_t i = 0; i < 7; i++) {
-        nodeType* node = remove();
-        std::cout << "priority = " << node->priority << " data = " << node->data << std::endl;
+    for(size_t i = 0; i < 7; i++){
+        remove();
     }
     printQ();
-    insert(1, 110);
-    insert(3, 120);
-    insert(6, 130);
+    insert(1, 111);
+    insert(2, 222);
+    insert(2, 232);
+    insert(1, 121);
+    insert(4, 444);
+    insert(2, 262);
+    insert(5, 555);
+    insert(8, 888);
     printQ();
-    
+
     return 0;
 }
