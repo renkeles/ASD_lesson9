@@ -149,6 +149,7 @@ void printQ(){
 int main()
 {
     initStruct();
+    printQ();
     insert(1, 11);
     insert(1, 22);
     insert(4, 33);
