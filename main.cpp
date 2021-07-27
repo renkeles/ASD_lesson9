@@ -199,35 +199,37 @@ T pop(){
 }
 
 void DecToBin(size_t n) {
-    if (n > 1) {
-        DecToBin(n / 2);
+    while (n > 0){
+        push(n % 2);
+        n /= 2;
     }
-    std::cout << n % 2;
 }
+
+
 
 void lesson9_2(){
-    int pushToStack = 0;
-    while(1){
-        std::cout << "Enter number(-1 to exit): " << std::endl;
-        std::cin >> pushToStack;
-        if(pushToStack == -1) break;
-        push(pushToStack);
+    int number = 0;
+    std::cout << "Enter number: " << std::endl;
+    std::cin >> number;
+    DecToBin(number);
+    while(cursor != -1){
+        std::cout << pop();
     }
 
-    while(cursor != -1){
-        int temp = pop();
-        std::cout << temp << " in dec = ";
-        DecToBin(temp);
-        std::cout << " in bin"<< std::endl;
-    }
+
+
 }
+
+
+
 
 
 int main()
 {
-    lesson9_1();
-    
+    //lesson9_1();
+
     lesson9_2();
 
     return 0;
 }
+
