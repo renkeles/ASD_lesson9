@@ -1,5 +1,7 @@
 #include <iostream>
 
+
+//////////////////////////////////////////////////////////////////////////////////
 const size_t SIZE_Q = 10;
 
 typedef struct {
@@ -26,7 +28,6 @@ void insert(size_t _priority, size_t _data) {
     node->data = _data;
     node->priority = _priority;
     size_t flag;
-
     if (items == 0) {
         arr[tail++] = node;
         items++;
@@ -81,9 +82,7 @@ void insert(size_t _priority, size_t _data){
     nodeType* node = new nodeType;
     node->priority = _priority;
     node->data = _data;
-
     size_t id = 0;
-
     if(++items > SIZE_Q){
         std::cout << "Queue is full! Item " << "[" << node->priority << ", " << node->data << "] not included!" << std::endl;
         items = 10;
@@ -95,7 +94,6 @@ void insert(size_t _priority, size_t _data){
                 break;
             }
         }
-
     }
 }
 
@@ -144,11 +142,8 @@ void printQ(){
     std::cout << " ]" << std::endl;
 }
 
-
-
-int main()
-{
-    initStruct();
+void lesson9_1(){
+       initStruct();
     printQ();
     insert(1, 11);
     insert(1, 22);
@@ -176,6 +171,63 @@ int main()
     insert(5, 555);
     insert(8, 888);
     printQ();
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////
+const int SIZE_ST = 1000;
+
+#define T int
+T Stack[SIZE_ST];
+int cursor = -1;
+
+bool push(T data){
+    if(cursor < SIZE_ST){
+        Stack[++cursor] = data;
+        return true;
+    }else{
+        std::cout << "(push) Stack overflow" << std::endl;
+        return false;
+    }
+}
+
+T pop(){
+    if(cursor != -1){
+        return Stack[cursor--];
+    }else{
+        std::cout << "(pop) Stack overflow" << std::endl;
+        return false;
+    }
+}
+
+void DecToBin(size_t n) {
+    if (n > 1) {
+        DecToBin(n / 2);
+    }
+    std::cout << n % 2;
+}
+
+void lesson9_2(){
+    int pushToStack = 0;
+    while(1){
+        std::cout << "Enter number(-1 to exit): " << std::endl;
+        std::cin >> pushToStack;
+        if(pushToStack == -1) break;
+        push(pushToStack);
+    }
+
+    while(cursor != -1){
+        int temp = pop();
+        std::cout << temp << " in dec = ";
+        DecToBin(temp);
+        std::cout << " in bin"<< std::endl;
+    }
+}
+
+
+int main()
+{
+    lesson9_1();
+    
+    lesson9_2();
 
     return 0;
 }
