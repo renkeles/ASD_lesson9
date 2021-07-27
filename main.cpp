@@ -193,8 +193,8 @@ T pop(){
     if(cursor != -1){
         return Stack[cursor--];
     }else{
-        std::cout << "(pop) Stack overflow" << std::endl;
-        return false;
+        std::cout << "(pop) Stack is empty" << std::endl;
+        return -1;
     }
 }
 
